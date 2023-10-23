@@ -16,16 +16,14 @@ from dataset import prepare_dataset
 
 @hydra.main(config_path="conf", config_name="config", version_base=None)
 def main(cfg: DictConfig):
-
     # 1. Print config for learning
     print(OmegaConf.to_yaml(cfg))
 
     # 2. Loading and preprocessing datasets
-    trainloaders, testloader = prepare_dataset(cfg.batch_size)
+    train_loader, val_loader = prepare_dataset(cfg.batch_size)
 
     # 3. Define clients
-    server_address = "127.0.0.1:8080"
-    generate_client(trainloaders, testloader, server_address, cfg)
+    generate_client(train_loader, val_loader, cfg.server_address, cfg)
 
 
 if __name__ == "__main__":

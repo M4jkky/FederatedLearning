@@ -18,6 +18,7 @@ class Net(nn.Module):
 
 # Train the network on train set
 def train(net, train_loader, optimizer, num_epochs, device):
+    loss = 0.0
     criterion = torch.nn.CrossEntropyLoss()
     net.train()
     net.to(device)
@@ -40,24 +41,24 @@ def train(net, train_loader, optimizer, num_epochs, device):
             total_correct += (predicted == target).sum().item()
 
         accuracy = 100 * total_correct / total_samples
-        print(f'Loss: {loss.item():.4f}, Accuracy: {accuracy:.4f}%')
+        print(f'Loss: {loss.item():.4f}, Train accuracy: {accuracy:.4f}%')
 
 
 # Testing the network on test set
-def test(net, test_loader, device):
+def test(net, val_loader, device):
     criterion = torch.nn.CrossEntropyLoss()
     loss = 0.0
     correct_predictions = 0
-    test_total_samples = 0
+    val_total_samples = 0
     net.eval()
     net.to(device)
     with torch.no_grad():
-        for batch in test_loader:
+        for batch in val_loader:
             features, target = batch['features'].to(device), batch['target'].to(device)
             outputs = net(features)
             loss = criterion(outputs, target).item()
             _, predicted = torch.max(outputs, 1)
             correct_predictions += (predicted == target).sum().item()
-            test_total_samples += target.size(0)
-            test_accuracy = correct_predictions / test_total_samples
-    return loss, test_accuracy
+            val_total_samples += target.size(0)
+            val_accuracy = correct_predictions / val_total_samples
+    return loss, val_accuracy
