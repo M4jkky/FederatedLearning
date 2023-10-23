@@ -1,4 +1,0 @@
-[2023-10-21 13:55:31,568][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
-[2023-10-21 13:55:31,574][flwr][DEBUG] - ChannelConnectivity.IDLE
-[2023-10-21 13:55:31,574][flwr][DEBUG] - ChannelConnectivity.READY
-[2023-10-21 13:55:31,777][flwr][DEBUG] - gRPC channel closed
