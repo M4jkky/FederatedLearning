@@ -1,0 +1,54 @@
+[2023-10-22 10:22:54,882][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=10, round_timeout=None)
+[2023-10-22 10:22:54,896][flwr][INFO] - Flower ECE: gRPC server running (10 rounds), SSL is disabled
+[2023-10-22 10:22:54,896][flwr][INFO] - Initializing global parameters
+[2023-10-22 10:22:54,896][flwr][INFO] - Requesting initial parameters from one random client
+[2023-10-22 10:22:56,542][flwr][INFO] - Received initial parameters from one random client
+[2023-10-22 10:22:56,542][flwr][INFO] - Evaluating initial parameters
+[2023-10-22 10:22:56,542][flwr][INFO] - FL starting
+[2023-10-22 10:22:57,674][flwr][DEBUG] - fit_round 1: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:02,236][flwr][DEBUG] - fit_round 1 received 2 results and 0 failures
+[2023-10-22 10:23:02,238][flwr][WARNING] - No fit_metrics_aggregation_fn provided
+[2023-10-22 10:23:02,238][flwr][DEBUG] - evaluate_round 1: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:05,065][flwr][DEBUG] - evaluate_round 1 received 2 results and 0 failures
+[2023-10-22 10:23:05,065][flwr][DEBUG] - fit_round 2: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:09,403][flwr][DEBUG] - fit_round 2 received 2 results and 0 failures
+[2023-10-22 10:23:09,403][flwr][DEBUG] - evaluate_round 2: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:12,255][flwr][DEBUG] - evaluate_round 2 received 2 results and 0 failures
+[2023-10-22 10:23:12,255][flwr][DEBUG] - fit_round 3: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:16,467][flwr][DEBUG] - fit_round 3 received 2 results and 0 failures
+[2023-10-22 10:23:16,468][flwr][DEBUG] - evaluate_round 3: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:19,308][flwr][DEBUG] - evaluate_round 3 received 2 results and 0 failures
+[2023-10-22 10:23:19,308][flwr][DEBUG] - fit_round 4: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:23,520][flwr][DEBUG] - fit_round 4 received 2 results and 0 failures
+[2023-10-22 10:23:23,521][flwr][DEBUG] - evaluate_round 4: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:26,424][flwr][DEBUG] - evaluate_round 4 received 2 results and 0 failures
+[2023-10-22 10:23:26,425][flwr][DEBUG] - fit_round 5: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:30,852][flwr][DEBUG] - fit_round 5 received 2 results and 0 failures
+[2023-10-22 10:23:30,853][flwr][DEBUG] - evaluate_round 5: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:33,784][flwr][DEBUG] - evaluate_round 5 received 2 results and 0 failures
+[2023-10-22 10:23:33,785][flwr][DEBUG] - fit_round 6: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:37,992][flwr][DEBUG] - fit_round 6 received 2 results and 0 failures
+[2023-10-22 10:23:37,992][flwr][DEBUG] - evaluate_round 6: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:40,812][flwr][DEBUG] - evaluate_round 6 received 2 results and 0 failures
+[2023-10-22 10:23:40,813][flwr][DEBUG] - fit_round 7: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:45,061][flwr][DEBUG] - fit_round 7 received 2 results and 0 failures
+[2023-10-22 10:23:45,061][flwr][DEBUG] - evaluate_round 7: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:47,906][flwr][DEBUG] - evaluate_round 7 received 2 results and 0 failures
+[2023-10-22 10:23:47,906][flwr][DEBUG] - fit_round 8: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:52,060][flwr][DEBUG] - fit_round 8 received 2 results and 0 failures
+[2023-10-22 10:23:52,061][flwr][DEBUG] - evaluate_round 8: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:54,956][flwr][DEBUG] - evaluate_round 8 received 2 results and 0 failures
+[2023-10-22 10:23:54,956][flwr][DEBUG] - fit_round 9: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:23:59,199][flwr][DEBUG] - fit_round 9 received 2 results and 0 failures
+[2023-10-22 10:23:59,199][flwr][DEBUG] - evaluate_round 9: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:24:02,023][flwr][DEBUG] - evaluate_round 9 received 2 results and 0 failures
+[2023-10-22 10:24:02,024][flwr][DEBUG] - fit_round 10: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:24:06,243][flwr][DEBUG] - fit_round 10 received 2 results and 0 failures
+[2023-10-22 10:24:06,243][flwr][DEBUG] - evaluate_round 10: strategy sampled 2 clients (out of 2)
+[2023-10-22 10:24:09,070][flwr][DEBUG] - evaluate_round 10 received 2 results and 0 failures
+[2023-10-22 10:24:09,070][flwr][INFO] - FL finished in 72.52850504199999
+[2023-10-22 10:24:09,071][flwr][INFO] - app_fit: losses_distributed [(1, 0.6383935809135437), (2, 0.6169137358665466), (3, 0.5978332757949829), (4, 0.5782289505004883), (5, 0.5568578839302063), (6, 0.5345037579536438), (7, 0.5121431350708008), (8, 0.49077871441841125), (9, 0.4716094434261322), (10, 0.45570358633995056)]
+[2023-10-22 10:24:09,071][flwr][INFO] - app_fit: metrics_distributed_fit {}
+[2023-10-22 10:24:09,071][flwr][INFO] - app_fit: metrics_distributed {'accuracy': [(1, 0.8525811514000166), (2, 0.8527298257206575), (3, 0.8527298257206575), (4, 0.8527298257206575), (5, 0.8527298257206575), (6, 0.8527298257206575), (7, 0.8527298257206575), (8, 0.8527298257206575), (9, 0.8527298257206575), (10, 0.8527298257206575)]}
+[2023-10-22 10:24:09,071][flwr][INFO] - app_fit: losses_centralized []
+[2023-10-22 10:24:09,071][flwr][INFO] - app_fit: metrics_centralized {}

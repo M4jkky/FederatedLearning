@@ -1,0 +1,4 @@
+---
+
+num_rounds: 10 # number of FL rounds in the experiment
+num_clients: 2 # number of total clients in the experiment

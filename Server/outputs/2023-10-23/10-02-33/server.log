@@ -1,0 +1,24 @@
+[2023-10-23 10:02:33,440][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=10, round_timeout=None)
+[2023-10-23 10:02:33,455][flwr][INFO] - Flower ECE: gRPC server running (10 rounds), SSL is disabled
+[2023-10-23 10:02:33,456][flwr][INFO] - Initializing global parameters
+[2023-10-23 10:02:33,456][flwr][INFO] - Requesting initial parameters from one random client
+[2023-10-23 10:02:37,580][flwr][INFO] - Received initial parameters from one random client
+[2023-10-23 10:02:37,580][flwr][INFO] - Evaluating initial parameters
+[2023-10-23 10:02:37,580][flwr][INFO] - FL starting
+[2023-10-23 10:02:39,945][flwr][DEBUG] - fit_round 1: strategy sampled 2 clients (out of 2)
+[2023-10-23 10:02:39,957][flwr][DEBUG] - fit_round 1 received 0 results and 2 failures
+[2023-10-23 10:03:16,775][flwr][DEBUG] - evaluate_round 1: strategy sampled 2 clients (out of 2)
+[2023-10-23 10:03:19,531][flwr][DEBUG] - evaluate_round 1 received 2 results and 0 failures
+[2023-10-23 10:03:19,531][flwr][DEBUG] - fit_round 2: strategy sampled 2 clients (out of 2)
+[2023-10-23 10:03:23,390][flwr][DEBUG] - fit_round 2 received 1 results and 1 failures
+[2023-10-23 10:04:03,903][grpc._server][ERROR] - Exception iterating responses: 
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/PyCharm/lib/python3.9/site-packages/grpc/_server.py", line 461, in _take_response_from_response_iterator
+    return next(response_iterator), True
+  File "/opt/anaconda3/envs/PyCharm/lib/python3.9/site-packages/flwr/server/fleet/grpc_bidi/flower_service_servicer.py", line 107, in Join
+    ins_wrapper: InsWrapper = next(ins_wrapper_iterator)
+  File "/opt/anaconda3/envs/PyCharm/lib/python3.9/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 162, in ins_wrapper_iterator
+    self._raise_if_closed()
+  File "/opt/anaconda3/envs/PyCharm/lib/python3.9/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 78, in _raise_if_closed
+    raise GrpcBridgeClosed()
+flwr.server.fleet.grpc_bidi.grpc_bridge.GrpcBridgeClosed
