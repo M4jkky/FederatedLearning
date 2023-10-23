@@ -1,5 +1,6 @@
 ---
 
+random_seed: 42 # random seed to use by the clients
 batch_size: 12000 # batch size to use by the clients
 input_size: 21 # input size of the model
 hidden_size: 8 # hidden size of the model

@@ -4,7 +4,7 @@ import numpy as np
 from omegaconf import DictConfig, OmegaConf
 import hydra
 
-seed = 42  # You can use any integer value as the seed
+seed = 42
 random_seed.seed(seed)
 np.random.seed(seed)
 torch.manual_seed(seed)

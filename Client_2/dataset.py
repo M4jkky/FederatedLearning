@@ -36,9 +36,9 @@ def load_dataset():
     try:
         # Load dataset for client 2
         client_2 = DatasetPreprocessing(csv_file='../Datasets/diabetes_client2.csv', transform=ToTensor())
-        test_dataset = DatasetPreprocessing(csv_file='../Datasets/diabetes_test.csv', transform=ToTensor())
+        val_dataset = DatasetPreprocessing(csv_file='../Datasets/diabetes_test.csv', transform=ToTensor())
 
-        return client_2, test_dataset
+        return client_2, val_dataset
 
     except FileNotFoundError:
         print("File not found. Please check the file path.")
@@ -48,9 +48,9 @@ def load_dataset():
 
 # Create DataLoader instances
 def prepare_dataset(batch_size):
-    client_2, test_dataset = load_dataset()
+    client_2, val_dataset = load_dataset()
 
     client_2 = DataLoader(client_2, batch_size=batch_size, shuffle=True)
-    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 
-    return client_2, test_loader
+    return client_2, val_loader

@@ -38,7 +38,7 @@ class Client(fl.client.NumPyClient):
         that belongs to this client. Then, send it back to the server."""
         with open('./conf/config.yaml', 'r') as config_file:
             config = yaml.safe_load(config_file)
-        print("Received config:", config)
+
         self.set_parameters(parameters)
         optimizer = torch.optim.Adam(self.model.parameters(), lr=config['learning_rate'])
         train(self.model, self.train_loader, optimizer, num_epochs=config['local_epochs'], device=self.device)

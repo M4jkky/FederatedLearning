@@ -22,6 +22,9 @@ def train(net, train_loader, optimizer, num_epochs, device):
     net.train()
     net.to(device)
     for epoch in range(num_epochs):
+        total_correct = 0
+        total_samples = 0
+
         for batch in train_loader:
             features, target = batch['features'].to(device), batch['target'].to(device)
             outputs = net(features)
@@ -29,6 +32,14 @@ def train(net, train_loader, optimizer, num_epochs, device):
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+
+            # Calculate accuracy
+            _, predicted = torch.max(outputs, 1)
+            total_samples += target.size(0)
+            total_correct += (predicted == target).sum().item()
+
+        accuracy = 100 * total_correct / total_samples
+        print(f' Loss: {loss.item():.4f}, Accuracy: {accuracy:.4f}%')
 
 
 # Testing the network on test set
