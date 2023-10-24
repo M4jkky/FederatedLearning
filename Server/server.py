@@ -1,11 +1,9 @@
+from omegaconf import DictConfig, OmegaConf
 from flwr.common import Metrics
 from typing import List, Tuple
 import flwr as fl
-
-from omegaconf import DictConfig, OmegaConf
 import hydra
 
-from model import Net, test
 from dataset import prepare_dataset
 
 
@@ -16,14 +14,6 @@ def weighted_average(metrics: List[Tuple[int, Metrics]]) -> Metrics:
     weighted_accuracy = sum(num_examples * m["accuracy"] for num_examples, m in metrics)
 
     return {"accuracy": weighted_accuracy / total_examples}
-
-
-# def load_and_evaluate_best_model(test_loader):
-
-
-#    # Evaluate the best model on the server test dataset
-#    accuracy = test(best_model, test_loader, device="cpu")
-#    print(f"Test Accuracy: {accuracy * 100:.2f}%")
 
 
 # Function to start Flower server
@@ -48,9 +38,6 @@ def main(cfg: DictConfig):
 
     # 3. Start Flower server for three rounds of federated learning
     start_flower_server(cfg.num_rounds)
-
-    # 4. Evaluate the best model on the server test dataset
-    # load_and_evaluate_best_model(test_loader)
 
 
 if __name__ == "__main__":

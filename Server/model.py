@@ -17,14 +17,13 @@ class Net(nn.Module):
 
 
 # Test the network on server test/valid dataset
-def test(net, val_loader, device):
-    criterion = torch.nn.CrossEntropyLoss()
+def test(net, test_loader, device):
     correct_predictions = 0
     test_total_samples = 0
     net.eval()
     net.to(device)
     with torch.no_grad():
-        for batch in val_loader:
+        for batch in test_loader:
             features, target = batch['features'].to(device), batch['target'].to(device)
             outputs = net(features)
             _, predicted = torch.max(outputs, 1)

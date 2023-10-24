@@ -1,7 +1,7 @@
-import random as random_seed
-import torch
-import numpy as np
 from omegaconf import DictConfig, OmegaConf
+import random as random_seed
+import numpy as np
+import torch
 import hydra
 
 seed = 42
