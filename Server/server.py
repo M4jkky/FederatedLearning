@@ -4,8 +4,6 @@ from typing import List, Tuple
 import flwr as fl
 import hydra
 
-from dataset import prepare_dataset
-
 
 # Define metric aggregation function
 def weighted_average(metrics: List[Tuple[int, Metrics]]) -> Metrics:
@@ -33,10 +31,7 @@ def main(cfg: DictConfig):
     # 1. Print config for learning
     print(OmegaConf.to_yaml(cfg))
 
-    # 2. Prepare the dataset
-    test_loader = prepare_dataset(cfg.batch_size)
-
-    # 3. Start Flower server for three rounds of federated learning
+    # 2. Start Flower server for three rounds of federated learning
     start_flower_server(cfg.num_rounds)
 
 
