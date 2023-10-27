@@ -35,7 +35,7 @@ class ToTensor:
 def load_dataset():
     try:
         # Load dataset for client 2
-        test_dataset = DatasetPreprocessing(csv_file='diabetes_test.csv', transform=ToTensor())
+        test_dataset = DatasetPreprocessing(csv_file='dataset/diabetes_test.csv', transform=ToTensor())
 
         return test_dataset
 

@@ -4,14 +4,14 @@ import numpy as np
 import torch
 import hydra
 
+from client import generate_client
+from dataset import prepare_dataset
+
 seed = 42
 random_seed.seed(seed)
 np.random.seed(seed)
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
-
-from client import generate_client
-from dataset import prepare_dataset
 
 
 @hydra.main(config_path="conf", config_name="config", version_base=None)
