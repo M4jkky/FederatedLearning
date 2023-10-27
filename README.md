@@ -5,4 +5,4 @@ feature selection I decided to use 8 attributes. The dataset is divided into 3 p
 and 20% for testing. After hyperparameter tuning I achieved 0.75 - 0.80 accuracy on the test set. Precision 0.90, recall
 0.77 and F1 score 0.83. I'm planning to make a web application for this project and also for data visualization.
 
-## Technical University of Košice, Intelligent Systems. Department of Cybernetics and Artificial Intelligence. 2023.
+#### Technical University of Košice, Intelligent Systems. Department of Cybernetics and Artificial Intelligence. 2023.
