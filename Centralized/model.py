@@ -1,10 +1,10 @@
-import torch
-import torch.nn as nn
+from sklearn.metrics import precision_score, recall_score, f1_score, confusion_matrix, accuracy_score
 import torch.nn.functional as F
-from sklearn.metrics import precision_score, recall_score, f1_score, confusion_matrix
+import torch.nn as nn
+import torch
 
 
-# Define model / same as centralized
+# Define model
 class Net(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
         super(Net, self).__init__()
@@ -23,8 +23,9 @@ def train(net, train_loader, val_loader, optimizer, num_epochs, device) -> None:
     net.train()
     net.to(device)
 
+    best_val_accuracy = 0.0  # Initialize best_val_accuracy variable
+
     for epoch in range(num_epochs):
-        best_val_accuracy = 0.0
         total_correct = 0
         total_samples = 0
         train_loss = 0.0
@@ -73,43 +74,40 @@ def train(net, train_loader, val_loader, optimizer, num_epochs, device) -> None:
               f'Val Loss: {average_val_loss:.4f}, '
               f'Val Accuracy: {val_accuracy:.2f}%')
 
-        # Save the best model based on validation accuracy
+        # Update best_val_accuracy if current val_accuracy is higher
         if val_accuracy > best_val_accuracy:
             best_val_accuracy = val_accuracy
-            #torch.save(net.state_dict(), f'model_{best_val_accuracy:.2f}.pth')
-            print(f'Saved the model with validation accuracy: {best_val_accuracy:.2f} in epoch {epoch + 1}')
+
+    # Save the model after training is complete
+    torch.save(net.state_dict(), f'best_model.pth')
+    print(f'Saved the best model with validation accuracy: {best_val_accuracy:.2f}')
 
     print('Training finished.')
 
 
 # Testing the network on test set
 def test(net, test_loader, device) -> None:
-    correct_predictions = 0
-    test_total_samples = 0
-    predicted_labels = []
-    true_labels = []
-
     net.eval()
     net.to(device)
+
+    all_predictions = []
+    all_targets = []
 
     with torch.no_grad():
         for batch in test_loader:
             features, target = batch['features'].to(device), batch['target'].to(device)
             outputs = net(features)
             _, predicted = torch.max(outputs, 1)
-            correct_predictions += (predicted == target).sum().item()
-            test_total_samples += target.size(0)
 
-            # Store predicted and true labels for calculating metrics
-            predicted_labels.extend(predicted.cpu().numpy())
-            true_labels.extend(target.cpu().numpy())
+            all_predictions.extend(predicted.cpu().numpy())
+            all_targets.extend(target.cpu().numpy())
 
-    test_accuracy = correct_predictions / test_total_samples
-    precision = precision_score(true_labels, predicted_labels, average='weighted')
-    recall = recall_score(true_labels, predicted_labels, average='weighted')
-    f1 = f1_score(true_labels, predicted_labels, average='weighted')
-    cf = confusion_matrix(true_labels, predicted_labels)
+    accuracy = accuracy_score(all_targets, all_predictions)
+    precision = precision_score(all_targets, all_predictions)
+    recall = recall_score(all_targets, all_predictions)
+    f1 = f1_score(all_targets, all_predictions)
+    cf = confusion_matrix(all_targets, all_predictions)
 
-    print(f'Test Accuracy: {test_accuracy:.2f}')
+    print(f'Test Accuracy: {accuracy:.2f}')
     print(f'Precision: {precision:.2f}, Recall: {recall:.2f}, F1 Score: {f1:.2f}')
     print(f'Confusion Matrix:\n{cf}')
