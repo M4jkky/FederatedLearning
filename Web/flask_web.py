@@ -23,11 +23,11 @@ class Net(nn.Module):
 
 
 model = Net(input_size=6, hidden_size=16, output_size=2)
-model.load_state_dict(torch.load('/Web/misc/best_model.pth'))
+model.load_state_dict(torch.load('/Users/m4jkky/Desktop/school/3rd year/BAKPR/Federated/Web/misc/best_model.pth'))
 model.eval()
 
 # Load the StandardScaler used during training
-scaler = joblib.load('/Web/misc/scaler.pkl')
+scaler = joblib.load('/Users/m4jkky/Desktop/school/3rd year/BAKPR/Federated/Web/misc/scaler.pkl')
 
 # Initialize empty lists for storing actual labels and predicted labels
 actual_labels = []
@@ -39,7 +39,7 @@ incorrect_predictions = []
 # Define the routes
 @app.route('/')
 def index():
-    return render_template('templates/index.html')
+    return render_template('index.html')
 
 
 @app.route('/predict', methods=['POST', 'GET'])
@@ -89,7 +89,7 @@ def predict():
                 incorrect_predictions.append(data.iloc[i])
 
     # Return the result messages and predictions to the template
-    return render_template('templates/result.html',
+    return render_template('result.html',
                            correct_predictions=correct_predictions,
                            incorrect_predictions=incorrect_predictions,
                            num_correct=len(correct_predictions),
