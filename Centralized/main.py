@@ -30,7 +30,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def main():
 
-    # 1. Loading and preprocessing datasets
+    # 1. Loading and preprocessing Datasets
     train_loader, val_loader, test_loader = prepare_dataset(batch_size)
 
     # 2. Define model and send to device

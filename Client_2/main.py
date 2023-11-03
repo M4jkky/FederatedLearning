@@ -19,7 +19,7 @@ def main(cfg: DictConfig):
     # 1. Print config for learning
     print(OmegaConf.to_yaml(cfg))
 
-    # 2. Loading and preprocessing datasets
+    # 2. Loading and preprocessing Datasets
     train_loader, val_loader = prepare_dataset(cfg.batch_size)
 
     # 3. Define clients
