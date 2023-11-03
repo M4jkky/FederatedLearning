@@ -1,0 +1,58 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Detection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;600&display=swap" rel="stylesheet">
+    <link href="../static/style_result.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="upper_case">
+        <a href="/Federated/Web/static"><img src="../static/back.png" alt="Back" class="back-button"></a>
+        <span>Bachelor Thesis</span>
+    </header>
+
+    <section id="title-section" class="upper_case">
+        <h1>Results: </h1>
+    </section>
+
+    <section class="computation">
+        <h4>Correct predictions: {{ num_correct }}</h4>
+        <h4>Incorrect predictions: {{ num_incorrect }}</h4>
+        <h4>Accuracy: {{ accuracy }}</h4>
+        <h4>Precision: {{ precision }}</h4>
+        <h4>Recall: {{ recall }}</h4>
+        <h4>F1 Score: {{ f1 }}</h4>
+    </section>
+
+    <article>
+
+        <section class="main">
+            <div class="correct">
+                    <h2>Correct: </h2>
+                    {% for record in correct_predictions %}
+                    <p>ID: {{ record['ID']|int }} Age: {{ record['age']|int }}, BMI: {{ record['bmi'] }} , Diabetes: {% if record['diabetes'] == 1 %}Yes{% else %}No{% endif %}</p>
+                    {% endfor %}
+                </div>
+
+                <div class="incorrect">
+                    <h2>Incorrect: </h2>
+                    {% for record in incorrect_predictions %}
+                    <p>ID: {{ record['ID']|int }} Age: {{ record['age']|int }}, BMI: {{ record['bmi'] }} , Diabetes: {% if record['diabetes'] == 1 %}Yes{% else %}No{% endif %}</p>
+                    {% endfor %}
+                </div>
+
+        </section>
+
+    </article>
+
+</body>
+
+</html>

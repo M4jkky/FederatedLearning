@@ -1,0 +1,80 @@
+.upper_case {
+    text-transform: uppercase;
+}
+
+body {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+header {
+    background-color: #1ED8B6;
+    color: white;
+    padding: 27px;
+    display: flex;
+    align-items: center;
+    font-size: 28px;
+    justify-content: flex-start;
+    text-align: center;
+    letter-spacing: 1px;
+    line-height: 30px;
+    margin-bottom: 30px;
+}
+
+span {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.back-button {
+    width: 24px;
+    height: 24px;
+}
+
+article {
+    max-width: 850px;
+    margin: auto;
+    padding-top: 25px;
+}
+
+#title-section {
+    margin-bottom: 50px;
+    font-size: 26px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    letter-spacing: 5px;
+    text-align: center;
+    font-size: 40px;
+    line-height: 58px;
+}
+
+img {
+    padding-top: 2px;
+}
+
+.main {
+    margin: auto;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.correct, .incorrect {
+    text-align: center;
+    width: 50%; /* Adjust the width as needed */
+
+}
+
+.computation {
+    max-width: 700px;
+    margin: 20px auto 30px auto;
+    padding: 5px 0;
+    text-align: center;
+    background-color: #f7fe72;
+    border-radius: 75px;
+    border: 3px solid #6F73D2;
+}

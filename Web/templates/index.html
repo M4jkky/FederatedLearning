@@ -1,0 +1,92 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Detection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;600&display=swap" rel="stylesheet">
+    <link href="../static/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="upper_case">
+        <span>Bachelor Thesis</span>
+        <a href="/predict"><img src="../static/forward.png" alt="Forward" class="forward-button"></a>
+    </header>
+
+    <article>
+
+        <section id="title-section">
+            <div class="author">by Marián Hriň</div>
+            <h1>Diabetes Detection</h1>
+            <div class="github upper_case">
+                <span>socials</span>
+                <a href="https://github.com/M4jkky"><img src="../static/github.png" alt="github"></a>
+                <a href="https://github.com/M4jkky"><img src="../static/Linkedin_Icon.png" alt="github"></a>
+            </div>
+        </section>
+
+        <section class="main">
+
+            <p>
+                This web app uses a neural network using PyTorch to predict whether a patient has diabetes or not.
+                The model was trained on a dataset containing 100 000 patients. The dataset was obtained from kaggle and
+                can be found down below.
+            </p>
+            <h4 class="upper_case">
+                To predict diabetes, upload a CSV file containing the following columns in this order:
+            </h4>
+
+            <div class="list">
+                <ul>
+                    <li>age</li>
+                    <li>hypertension</li>
+                    <li>heart_disease</li>
+                    <li>bmi</li>
+                    <li>HbA1c_level</li>
+                    <li>blood_glucose_level</li>
+                    <li>diabetes</li>
+                </ul>
+            </div>
+
+            <form class="csv" action="/predict" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".csv" id="real-button" hidden>
+                    <label for="real-button">Choose file</label>
+                <span id="file-chosen">No file chosen</span>
+                <input type="submit" value="Upload and Predict" id="submit-button" hidden >
+                    <label for="submit-button">Predict</label>
+
+            </form>
+
+        </section>
+
+    </article>
+
+    <footer>
+        <div class="links upper_case">links</div>
+        <ul>
+
+            <li><a href="https://github.com/IKS-TUKE-studenti-2023-2024">GitHub</a></li>
+            <li><a href="https://www.kaggle.com/datasets/iammustafatz/diabetes-prediction-dataset">Dataset</a></li>
+        </ul>
+
+    </footer>
+
+    <script>
+
+        const actualBtn = document.getElementById('real-button');
+
+        const fileChosen = document.getElementById('file-chosen');
+
+        actualBtn.addEventListener('change', function(){
+        fileChosen.textContent = this.files[0].name
+})
+
+    </script>
+
+</body>
+</html>

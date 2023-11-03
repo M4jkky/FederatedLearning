@@ -1,0 +1,159 @@
+body {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+article {
+    max-width: 850px;
+    margin: auto;
+    padding-top: 25px;
+}
+
+a {
+    color: #1ED8B6;
+    font-size: 14px;
+}
+
+.upper_case {
+    text-transform: uppercase;
+}
+
+header {
+    background-color: #1ED8B6;
+    color: white;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    font-size: 28px;
+    justify-content: flex-start;
+    text-align: center;
+    letter-spacing: 1px;
+    line-height: 30px;
+}
+
+span {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.back-button {
+    width: 24px;
+    height: 24px;
+}
+
+#title-section {
+    margin-bottom: 50px;
+}
+
+.author {
+    margin-left: 18.5%;
+    color: #6C6C6C;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.github {
+    margin-left: 18.5%;
+    font-size: 12px;
+    line-height: 22px;
+    font-weight: 600;
+}
+
+.github span {
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+.github img {
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    margin-right: 4px;
+
+}
+
+img {
+    padding-top: 2px;
+}
+
+h1 {
+    margin: 0;
+    letter-spacing: 5px;
+    text-align: center;
+    font-size: 52px;
+    line-height: 58px;
+}
+
+.main {
+    margin: auto;
+    max-width: 800px;
+    padding-bottom: 20px;
+}
+
+p {
+    font-size: 16px;
+    line-height: 24px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+.list ul li {
+    padding: 0;
+    list-style-type: square ;
+}
+
+.csv {
+    margin-top: 20px;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    border-radius: 25px;
+    border: 3px solid #1ED8B6;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px 15px;
+    background-color: #F1F1F1;
+}
+
+footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+footer ul li {
+    margin-bottom: 12px;
+}
+
+footer ul li:last-of-type{
+    margin-bottom: 0;
+}
+
+.links {
+    margin-bottom: 12px;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 600;
+}
+
+label {
+    color: black;
+    background-color: #f7fe72;
+    border-radius: 10px;
+    border: 2px solid #6F73D2;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 10px 20px;
+}
+
+label[for="submit-button"] {
+    margin-left: 50px;
+}
+
+label[for="real-button"] {
+    margin-right: 10px;
+}
