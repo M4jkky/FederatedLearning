@@ -9,7 +9,7 @@ body {
 
 header {
     background-color: #1ED8B6;
-    color: white;
+    color: black;
     padding: 27px;
     display: flex;
     align-items: center;
@@ -19,6 +19,7 @@ header {
     letter-spacing: 1px;
     line-height: 30px;
     margin-bottom: 30px;
+    border-bottom: 2px solid black;
 }
 
 span {
@@ -52,6 +53,10 @@ h1 {
     line-height: 58px;
 }
 
+h4 {
+    font-size: 20px;
+}
+
 img {
     padding-top: 2px;
 }
@@ -65,7 +70,7 @@ img {
 
 .correct, .incorrect {
     text-align: center;
-    width: 50%; /* Adjust the width as needed */
+    width: 50%;
 
 }
 
@@ -74,7 +79,7 @@ img {
     margin: 20px auto 30px auto;
     padding: 5px 0;
     text-align: center;
-    background-color: #f7fe72;
+    background-color: #EFD9CE;
     border-radius: 75px;
-    border: 3px solid #6F73D2;
+    border: 3px solid #886F68;
 }

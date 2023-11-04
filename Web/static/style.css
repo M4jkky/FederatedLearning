@@ -20,7 +20,7 @@ a {
 
 header {
     background-color: #1ED8B6;
-    color: white;
+    color: black;
     padding: 25px;
     display: flex;
     align-items: center;
@@ -29,6 +29,7 @@ header {
     text-align: center;
     letter-spacing: 1px;
     line-height: 30px;
+    border-bottom: 2px solid black;
 }
 
 span {
@@ -142,9 +143,9 @@ footer ul li:last-of-type{
 
 label {
     color: black;
-    background-color: #f7fe72;
+    background-color: #EFD9CE;
     border-radius: 10px;
-    border: 2px solid #6F73D2;
+    border: 2px solid #886F68;
     cursor: pointer;
     font-size: 20px;
     padding: 10px 20px;
