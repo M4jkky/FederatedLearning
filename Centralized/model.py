@@ -18,7 +18,7 @@ class Net(nn.Module):
 
 
 # Train the network on train set
-def train(net, train_loader, val_loader, optimizer, num_epochs, device) -> None:
+def train(net, train_loader, val_loader, optimizer, num_epochs, device, writer) -> None:
     criterion = torch.nn.CrossEntropyLoss()
     net.train()
     net.to(device)
@@ -49,12 +49,12 @@ def train(net, train_loader, val_loader, optimizer, num_epochs, device) -> None:
         average_train_loss = train_loss / len(train_loader)
 
         # Validation loop
-        net.eval()  # Set the model to evaluation mode
+        net.eval()
         val_total_correct = 0
         val_total_samples = 0
         val_loss = 0.0
 
-        with torch.no_grad():  # Disable gradient calculation during validation
+        with torch.no_grad():
             for val_batch in val_loader:
                 val_features, val_target = val_batch['features'].to(device), val_batch['target'].to(device)
                 val_outputs = net(val_features)
@@ -67,6 +67,12 @@ def train(net, train_loader, val_loader, optimizer, num_epochs, device) -> None:
 
         val_accuracy = 100 * val_total_correct / val_total_samples
         average_val_loss = val_loss / len(val_loader)
+
+        # TensorBoard logging for training/validation loss and accuracy
+        writer.add_scalar('Loss/train', average_train_loss, epoch)
+        writer.add_scalar('Accuracy/train', train_accuracy, epoch)
+        writer.add_scalar('Loss/val', average_val_loss, epoch)
+        writer.add_scalar('Accuracy/val', val_accuracy, epoch)
 
         print(f'Epoch [{epoch + 1}/{num_epochs}], '
               f'Loss: {average_train_loss:.4f}, '

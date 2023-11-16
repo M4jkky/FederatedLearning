@@ -42,6 +42,48 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/predict_form', methods=['GET', 'POST'])
+def predict_form():
+    prediction_result = None  # Initialize to None
+
+    if request.method == 'POST':
+        form_result = request.form
+
+        # Extract relevant features
+        age = float(form_result['age'])
+        bmi = float(form_result['bmi'])
+        HbA1c_level = float(form_result['HbA1c_level'])
+        blood_glucose_level = float(form_result['blood_glucose_level'])
+
+        # Convert checkbox values to 1 if checked, 0 otherwise
+        hypertension = 1 if 'hypertension' in form_result else 0
+        heart_disease = 1 if 'heart_disease' in form_result else 0
+
+        # Create a DataFrame with the input features
+        features = pd.DataFrame({
+            'age': [age],
+            'hypertension': [hypertension],
+            'heart_disease': [heart_disease],
+            'bmi': [bmi],
+            'HbA1c_level': [HbA1c_level],
+            'blood_glucose_level': [blood_glucose_level]
+        })
+
+        # Scale features using the same StandardScaler instance
+        scaled_features = scaler.transform(features)
+
+        # Convert features to PyTorch tensor
+        input_tensor = torch.tensor(scaled_features).float()
+
+        # Make predictions
+        with torch.no_grad():
+            outputs = model(input_tensor)
+            _, predicted = torch.max(outputs, 1)
+            prediction_result = predicted.item()
+
+    return render_template('form_check.html', prediction_result=prediction_result)
+
+
 @app.route('/predict', methods=['POST', 'GET'])
 def predict():
     global correct_predictions, incorrect_predictions, actual_labels, predicted_labels

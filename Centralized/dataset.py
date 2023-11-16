@@ -2,6 +2,7 @@ import joblib
 import pandas as pd
 import torch
 from imblearn.over_sampling import KMeansSMOTE
+from imblearn.combine import SMOTEENN
 from torch.utils.data import Dataset, DataLoader
 from sklearn.preprocessing import StandardScaler
 
@@ -24,11 +25,12 @@ class DatasetPreprocessing(Dataset):
         self.features = self.scaler.fit_transform(self.features)
 
         # Save the scaler object to a file
-        joblib.dump(self.scaler, 'scaler.pkl')
+        joblib.dump(self.scaler, '../Web/misc/scaler.pkl')
 
         if oversample:
             kmeans = KMeansSMOTE(cluster_balance_threshold=0.1)
-            self.features, self.target = kmeans.fit_resample(self.features, self.target)
+            smote = SMOTEENN(sampling_strategy=0.5)
+            self.features, self.target = smote.fit_resample(self.features, self.target)
 
         if transform:
             self.transform = transform
