@@ -1,9 +1,10 @@
 import joblib
 import pandas as pd
 import torch
-from imblearn.over_sampling import KMeansSMOTE
-from imblearn.combine import SMOTEENN
+from imblearn.over_sampling import KMeansSMOTE, SVMSMOTE
+from imblearn.under_sampling import EditedNearestNeighbours, NeighbourhoodCleaningRule, AllKNN, TomekLinks, OneSidedSelection, InstanceHardnessThreshold
 from torch.utils.data import Dataset, DataLoader
+from imblearn.combine import SMOTETomek
 from sklearn.preprocessing import StandardScaler
 
 
@@ -29,8 +30,20 @@ class DatasetPreprocessing(Dataset):
 
         if oversample:
             kmeans = KMeansSMOTE(cluster_balance_threshold=0.1)
-            smote = SMOTEENN(sampling_strategy=0.5)
-            self.features, self.target = smote.fit_resample(self.features, self.target)
+            edited_nearest_neighbours = EditedNearestNeighbours()
+            neighbourhood_cleaning_rule = NeighbourhoodCleaningRule()
+            allknn = AllKNN()
+            tomeklinks = TomekLinks()
+            onesided_selection = OneSidedSelection()
+            svm = SVMSMOTE(sampling_strategy=0.7)
+            smote_tomek = SMOTETomek()
+
+            for i in range(3):
+                print("round ", i)
+                iht = InstanceHardnessThreshold(n_jobs=-1, sampling_strategy=0.5)
+                self.features, self.target = iht.fit_resample(self.features, self.target)
+
+            #self.features, self.target = tomeklinks.fit_resample(self.features, self.target)
 
         if transform:
             self.transform = transform

@@ -11,7 +11,7 @@ article {
 
 a {
     color: #1ED8B6;
-    font-size: 14px;
+    font-size: 20px;
 }
 
 .upper_case {
@@ -38,7 +38,12 @@ span {
 }
 
 
-.back-button {
+.forward-button {
+    width: 24px;
+    height: 24px;
+}
+
+.form-button {
     width: 24px;
     height: 24px;
 }

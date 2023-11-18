@@ -23,11 +23,11 @@ class Net(nn.Module):
 
 
 model = Net(input_size=6, hidden_size=16, output_size=2)
-model.load_state_dict(torch.load('/Users/m4jkky/Desktop/school/3rd year/BAKPR/Federated/Web/misc/best_model.pth'))
+model.load_state_dict(torch.load('./misc/no_method.pth'))
 model.eval()
 
 # Load the StandardScaler used during training
-scaler = joblib.load('/Users/m4jkky/Desktop/school/3rd year/BAKPR/Federated/Web/misc/scaler.pkl')
+scaler = joblib.load('./misc/scaler.pkl')
 
 # Initialize empty lists for storing actual labels and predicted labels
 actual_labels = []
@@ -42,9 +42,9 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/predict_form', methods=['GET', 'POST'])
+@app.route('/form', methods=['GET', 'POST'])
 def predict_form():
-    prediction_result = None  # Initialize to None
+    prediction_result = None
 
     if request.method == 'POST':
         form_result = request.form
@@ -81,7 +81,7 @@ def predict_form():
             _, predicted = torch.max(outputs, 1)
             prediction_result = predicted.item()
 
-    return render_template('form_check.html', prediction_result=prediction_result)
+    return render_template('form.html', prediction_result=prediction_result)
 
 
 @app.route('/predict', methods=['POST', 'GET'])

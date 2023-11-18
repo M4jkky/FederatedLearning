@@ -3,17 +3,17 @@ import flwr as fl
 import torch
 import yaml
 
-
 from model import Net, train, test
 
 
 class Client(fl.client.NumPyClient):
-    def __init__(self, train_loader, test_loader, config) -> None:
+    def __init__(self, train_loader, test_loader, config, writer) -> None:
         super().__init__()
 
         # the dataloaders that point to the data associated to this client
         self.train_loader = train_loader
         self.test_loader = test_loader
+        self.writer = writer
 
         # a model that is randomly initialised at first
         self.model = Net(input_size=config['input_size'], hidden_size=config['hidden_size'],
@@ -40,7 +40,8 @@ class Client(fl.client.NumPyClient):
 
         self.set_parameters(parameters)
         optimizer = torch.optim.Adam(self.model.parameters(), lr=config['learning_rate'])
-        train(self.model, self.train_loader, optimizer, num_epochs=config['local_epochs'], device=self.device)
+        train(self.model, self.train_loader, optimizer, num_epochs=config['local_epochs'], device=self.device,
+              writer=self.writer)
 
         return self.get_parameters({}), len(self.train_loader), {}
 
@@ -52,9 +53,9 @@ class Client(fl.client.NumPyClient):
         return float(loss), len(self.test_loader), {"accuracy": accuracy}
 
 
-def generate_client(train_loaders, test_loaders, server_adress, config):
+def generate_client(train_loaders, test_loaders, server_adress, config, writer):
     """Generate a Flower client for each dataset partition."""
     fl.client.start_numpy_client(
         server_address=server_adress,
-        client=Client(train_loaders, test_loaders, config)
+        client=Client(train_loaders, test_loaders, config, writer)
     )

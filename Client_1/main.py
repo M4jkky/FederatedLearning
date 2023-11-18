@@ -4,6 +4,7 @@ import numpy as np
 import torch
 import hydra
 
+from tensorboardX import SummaryWriter
 from client import generate_client
 from dataset import prepare_dataset
 
@@ -12,6 +13,8 @@ random_seed.seed(seed)
 np.random.seed(seed)
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
+
+writer = SummaryWriter()
 
 
 @hydra.main(config_path="conf", config_name="config", version_base=None)
@@ -23,7 +26,10 @@ def main(cfg: DictConfig):
     train_loader, val_loader = prepare_dataset(cfg.batch_size)
 
     # 3. Define clients
-    generate_client(train_loader, val_loader, cfg.server_address, cfg)
+    generate_client(train_loader, val_loader, cfg.server_address, cfg, writer)
+
+    # 4. Close the SummaryWriter
+    writer.close()
 
 
 if __name__ == "__main__":

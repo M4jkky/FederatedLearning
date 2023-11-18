@@ -17,7 +17,7 @@ class Net(nn.Module):
 
 
 # Train the network on train set
-def train(net, train_loader, optimizer, num_epochs, device):
+def train(net, train_loader, optimizer, num_epochs, device, writer):
     loss = 0.0
     criterion = torch.nn.CrossEntropyLoss()
     net.train()
@@ -42,6 +42,10 @@ def train(net, train_loader, optimizer, num_epochs, device):
 
         accuracy = 100 * total_correct / total_samples
         print(f'Loss: {loss.item():.4f}, Train accuracy: {accuracy:.4f}%')
+
+        # Log training loss and accuracy
+        writer.add_scalar('Loss/train', loss.item(), epoch)
+        writer.add_scalar('Accuracy/train', accuracy, epoch)
 
 
 # Testing the network on test set

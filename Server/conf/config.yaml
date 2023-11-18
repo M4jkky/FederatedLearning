@@ -1,6 +1,6 @@
 ---
 
-num_rounds: 10 # number of FL rounds in the experiment
+num_rounds: 3 # number of FL rounds in the experiment
 num_clients: 2 # number of total clients in the experiment
 batch_size: 128 # batch size to use by the clients
 input_size: 6 # input size of the model

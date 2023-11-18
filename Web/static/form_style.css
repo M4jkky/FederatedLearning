@@ -18,7 +18,7 @@ header {
     text-align: center;
     letter-spacing: 1px;
     line-height: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     border-bottom: 2px solid black;
 }
 
@@ -26,7 +26,6 @@ span {
     margin-left: auto;
     margin-right: auto;
 }
-
 
 .back-button {
     width: 24px;
@@ -36,12 +35,16 @@ span {
 article {
     max-width: 850px;
     margin: auto;
-    padding-top: 25px;
     justify-content: center;
 }
 
+label {
+    font-size: 20px;
+}
+
 #title-section {
-    margin-bottom: 50px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     font-size: 26px;
     text-align: center;
 }
@@ -50,12 +53,12 @@ h1 {
     margin: 0;
     letter-spacing: 5px;
     text-align: center;
-    font-size: 40px;
+    font-size: 36px;
     line-height: 58px;
 }
 
-h4 {
-    font-size: 20px;
+h3 {
+    font-size: 18px;
 }
 
 img {
@@ -63,12 +66,247 @@ img {
 }
 
 .main {
-    margin: auto;
-    padding-bottom: 20px;
-    background-color: antiquewhite;
+    padding: 2px;
+    text-align: center;
+    margin: auto auto 0;
+}
+
+/* New Style for the Slider Label Container */
+.label-container {
+    display: flex;
+    align-items: center;
+}
+
+.slider-row {
+    font-size: 18px;
+}
+
+/* Style for the slider container */
+.slider-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 520px;
+    margin: 5px auto 2px;
+}
+
+/* Style for the slider */
+.slider {
+    -webkit-appearance: none;
+    height: 10px;
+    border-radius: 6px;
+    background: linear-gradient(to right, #4CAF50, #1ED8B6);
+    outline: none;
+    opacity: 0.9;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    width: 100%;
+    flex: 1;
+}
+
+/* Style for the slider labels */
+.slider-label-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+/* Style for the slider labels */
+.slider-label {
+    flex: 0 0 30px;
+    font-size: 18px;
+    padding-left: 8px;
+}
+
+/* Adjust the margin for the slider container to create space */
+.slider-container .slider {
+    flex: 1;
+    margin: 0 10px;
+}
+
+/* Updated Slider Thumb for Modern Design */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgb(128, 128, 128);
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* Updated Slider Hover Effect for Modern Design */
+.slider:hover {
+    opacity: 1;
+    background: linear-gradient(to right, #4CAF50, #1ED8B6);
+}
+
+button {
+    color: black;
+    background-color: #EFD9CE;
+    border-radius: 10px;
+    border: 2px solid #886F68;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #a68278; /* Adjust the hover color as needed */
+}
+
+/* Style for the checkbox container */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Style for the checkbox labels */
+.checkbox-label {
+    font-size: 20px;
+    text-align: center;
+    margin-left: 10px;
+}
+
+/* Style for the checkbox */
+.checkbox {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    background: #1ED8B6;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    margin-left: 10px;
+}
+
+/* Style for the checkbox mark */
+.checkbox::before {
+    content: '\2713'; /* Unicode checkmark character */
+    font-size: 16px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Added transition effect */
+}
+
+/* Updated Checkbox Checked Style */
+.checkbox:checked {
+    background: #15a88b;
+}
+
+/* Updated Checkbox Checked Mark Style */
+.checkbox:checked::before {
+    opacity: 1;
+}
+
+.value-container {
+    margin-top: 0;
     text-align: center;
 }
 
-form input {
-    margin-top: 25px;
+.results {
+    text-align: center;
+    margin: auto auto 20px;
+}
+
+.results h3 {
+    margin-top: 10px;
+    padding-bottom: 12px;
+}
+
+/* Add the modal styles here */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    width: 70%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative; /* Added position relative */
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 0;
+    right: 8px;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #333;
+}
+
+/* Additional styling for the modal content */
+#modalText {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+}
+
+/* Styling for the image */
+.info-icon img {
+    width: 20px; /* Adjust the width as needed */
+    height: 20px; /* Adjust the height as needed */
+    cursor: pointer;
+    vertical-align: middle; /* Align the image vertically in the middle */
+    margin-bottom: 7px;
+}
+
+/* Updated Style for Label Container */
+.label-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Adjustments for the Text Labels */
+.slider-row label span,
+.checkbox-container label span {
+    flex: 1; /* Expand to fill available space */
+    text-align: center; /* Center text */
+}
+
+a {
+    color: #1f9a83;
 }

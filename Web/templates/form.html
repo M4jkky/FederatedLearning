@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Detection Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;600&display=swap" rel="stylesheet">
+    <link href="../static/form_style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="upper_case">
+        <a href="/"><img src="../static/back.png" alt="Back" class="back-button"></a>
+        <span>Bachelor Thesis</span>
+    </header>
+
+    <section id="title-section" class="upper_case">
+        <h1>Form</h1>
+    </section>
+
+        <article>
+
+        <section class="main">
+
+            <form action="/form" method="post">
+
+                <div class="slider-row">
+                    <label for="age" class="info-icon" onclick="showInfo('age_info')"><img src="../static/question.png" alt="Info"></label>
+                    <label for="age">Age:</label>
+                    <div class="slider-container">
+                        <div class="slider-label">0</div>
+                        <input type="range" name="age" id="age" min="0" max="100" value="50" class="slider">
+                        <div class="slider-label">100</div>
+                    </div>
+                    <p class="value-container"><span id="age_value"></span></p>
+                </div>
+
+                <div class="checkbox-container">
+                    <label for="hypertension" class="info-icon" onclick="showInfo('hypertension_info')">
+                        <img src="../static/question.png" alt="Info">
+                    </label>
+                    <label for="hypertension" class="checkbox-label">Hypertension:</label>
+                    <input type="checkbox" name="hypertension" id="hypertension" class="checkbox">
+                </div>
+
+                <div class="checkbox-container">
+                    <label for="heart_disease" class="info-icon" onclick="showInfo('heart_info')">
+                        <img src="../static/question.png" alt="Info">
+                    </label>
+                    <label for="heart_disease" class="checkbox-label">Heart Disease:</label>
+                    <input type="checkbox" name="heart_disease" id="heart_disease" class="checkbox">
+                </div>
+
+                <div class="slider-row">
+                    <label for="bmi" class="info-icon" onclick="showInfo('bmi_info')"><img src="../static/question.png" alt="Info"></label>
+                    <label for="bmi">BMI:</label>
+                    <div class="slider-container">
+                        <div class="slider-label">15</div>
+                        <input type="range" name="bmi" id="bmi" min="15" max="50" value="32.5" class="slider" step="0.5">
+                        <div class="slider-label">50</div>
+                    </div>
+                    <p class="value-container"><span id="bmi_value"></span></p>
+                </div>
+
+                <div class="slider-row">
+                    <label for="HbA1c_level" class="info-icon" onclick="showInfo('hb_info')"><img src="../static/question.png" alt="Info"></label>
+                    <label for="HbA1c_level">HbA1c Level:</label>
+                    <div class="slider-container">
+                        <div class="slider-label">3</div>
+                        <input type="range" name="HbA1c_level" id="HbA1c_level" min="3" max="9" value="6" class="slider" step="0.1">
+                        <div class="slider-label">9</div>
+                    </div>
+                    <p class="value-container"><span id="hb_value"></span></p>
+                </div>
+
+                <div class="slider-row">
+                    <label for="blood_glucose_level" class="info-icon" onclick="showInfo('glucose_info')"><img src="../static/question.png" alt="Info"></label>
+                    <label for="blood_glucose_level">Blood Glucose Level:</label>
+                    <div class="slider-container">
+                        <div class="slider-label">80</div>
+                        <input type="range" name="blood_glucose_level" id="blood_glucose_level" min="80" max="300" value="190" class="slider">
+                        <div class="slider-label">300</div>
+                    </div>
+                    <p class="value-container"><span id="glucose_value"></span></p>
+                </div>
+
+                <button type="submit">Predict</button>
+
+                <!-- Hidden input fields to store slider values -->
+                <input type="hidden" id="hidden_age" name="hidden_age" value="50">
+                <input type="hidden" id="hidden_bmi" name="hidden_bmi" value="32.5">
+                <input type="hidden" id="hidden_HbA1c" name="hidden_HbA1c" value="6">
+                <input type="hidden" id="hidden_glucose" name="hidden_glucose" value="190">
+
+            </form>
+
+            </section>
+
+            <section class="results">
+
+                {% if prediction_result is defined and prediction_result is not none %}
+                    {% if prediction_result == 1 %}
+                        <h3>Based on the information you have provided. There is a high probability that you will develop diabetes.<br>
+                            More information here: <a href="https://www.cdc.gov/diabetes/basics/diabetes.html" target="_blank">Centers for Disease Control and Prevention</a>.</h3>
+                    {% else %}
+                        <h3>Based on the information you have provided. It is likely that you will not develop diabetes.<br>
+                            More information here: <a href="https://www.cdc.gov/diabetes/basics/diabetes.html" target="_blank">Centers for Disease Control and Prevention</a>.</h3>
+                    {% endif %}
+                {% endif %}
+
+            </section>
+
+    </article>
+
+    <!-- Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p id="modalText"></p>
+        </div>
+    </div>
+
+
+    <script>
+
+        const slider1 = document.getElementById("age");
+        const output1 = document.getElementById("age_value");
+        const hidden1 = document.getElementById("hidden_age");
+
+        const slider2 = document.getElementById("bmi");
+        const output2 = document.getElementById("bmi_value");
+        const hidden2 = document.getElementById("hidden_bmi");
+
+        const slider3 = document.getElementById("HbA1c_level");
+        const output3 = document.getElementById("hb_value");
+        const hidden3 = document.getElementById("hidden_HbA1c");
+
+        const slider4 = document.getElementById("blood_glucose_level");
+        const output4 = document.getElementById("glucose_value");
+        const hidden4 = document.getElementById("hidden_glucose");
+
+        output1.innerHTML = slider1.value;
+        output2.innerHTML = slider2.value;
+        output3.innerHTML = slider3.value;
+        output4.innerHTML = slider4.value;
+
+        slider1.oninput = function() {
+            output1.innerHTML = this.value;
+            hidden1.value = this.value;  // Update hidden input field
+        }
+
+        slider2.oninput = function() {
+            output2.innerHTML = this.value;
+            hidden2.value = this.value;
+        }
+
+        slider3.oninput = function() {
+            output3.innerHTML = this.value;
+            hidden3.value = this.value;
+        }
+
+        slider4.oninput = function() {
+            output4.innerHTML = this.value;
+            hidden4.value = this.value;
+        }
+
+        function showInfo(label) {
+            let infoText;
+
+            // Customize the information based on the label
+            switch (label) {
+                case 'age_info':
+                    infoText = 'Age is an important factor because diabetes is more commonly diagnosed in older adults.' +
+                        ' The risk of developing diabetes increases with age.';
+                    break;
+                case 'hypertension_info':
+                    infoText = 'Hypertension is a disease in which the blood pressure in the arteries is permanently ' +
+                        'elevated. It is associated with an increased risk of diabetes.';
+                    break;
+                case 'heart_info':
+                    infoText = 'Another disease that is associated with an increased risk of diabetes is heart disease. ' +
+                        'This includes coronary heart disease, heart failure, and cardiomyopathy.';
+                    break;
+                case 'bmi_info':
+                    infoText = 'BMI (Body Mass Index) is a measure of body fat based on weight and height. ' +
+                        'Higher BMI values are associated with a higher risk of diabetes. A BMI below 18.5 is underweight, ' +
+                        '18.5-24.9 is normal, 25-29.9 is overweight, and 30 or more is obese.';
+                    break;
+                case 'hb_info':
+                    infoText = 'HbA1c (hemoglobin A1c) is a measure of the average blood sugar level over the last ' +
+                        '2-3 months. Higher levels mean a higher risk of developing diabetes. In most cases, more than ' +
+                        '6.5% of the HbA1c level indicates diabetes.';
+                    break;
+                case 'glucose_info':
+                    infoText = 'Blood glucose level refers to the amount of glucose in the blood at a given time. ' +
+                        'A high blood glucose level is a key indicator of diabetes.';
+                    break;
+
+                default:
+                    infoText = 'Information not available.';
+            }
+
+            // Display the modal with the information
+            openModal(infoText);
+        }
+
+        function openModal(infoText) {
+            document.getElementById('modalText').innerHTML = infoText;
+            document.getElementById('infoModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('infoModal').style.display = 'none';
+        }
+
+        // Close the modal if the user clicks outside of it
+        window.onclick = function (event) {
+            if (event.target === document.getElementById('infoModal')) {
+                closeModal();
+            }
+        };
+
+    </script>
+
+</body>
+
+</html>
