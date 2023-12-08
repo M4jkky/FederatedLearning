@@ -1,8 +1,8 @@
-from collections import OrderedDict
 import flwr as fl
 import torch
 import yaml
 
+from collections import OrderedDict
 from model import Net, train, test
 
 

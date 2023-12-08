@@ -1,7 +1,7 @@
-import torch
-import torch.optim as optim
 import random as random_seed
+import torch.optim as optim
 import numpy as np
+import torch
 import time
 
 from tensorboardX import SummaryWriter
@@ -20,9 +20,9 @@ torch.cuda.manual_seed(seed)
 writer = SummaryWriter()
 
 # Hyperparameters
-batch_size = 64
-learning_rate = 0.0001
-epochs = 100
+batch_size = 32
+learning_rate = 0.001
+epochs = 50
 input_size = 6
 hidden_size = 16
 output_size = 2
@@ -32,6 +32,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def main():
+
     # 1. Loading and preprocessing Datasets
     train_loader, val_loader, test_loader = prepare_dataset(batch_size)
 
@@ -50,7 +51,7 @@ def main():
     # 6. Print time taken to run the program
     print(f"Time: {(time.time() - start_time):.1f} seconds")
 
-    # Close the SummaryWriter
+    # 7. Close the SummaryWriter
     writer.close()
 
 

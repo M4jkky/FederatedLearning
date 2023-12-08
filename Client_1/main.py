@@ -1,9 +1,9 @@
-from omegaconf import DictConfig, OmegaConf
 import random as random_seed
 import numpy as np
 import torch
 import hydra
 
+from omegaconf import DictConfig, OmegaConf
 from tensorboardX import SummaryWriter
 from client import generate_client
 from dataset import prepare_dataset

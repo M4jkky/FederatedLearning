@@ -1,7 +1,7 @@
-from torch.utils.data import Dataset, DataLoader
 import pandas as pd
 import torch
 
+from torch.utils.data import Dataset, DataLoader
 
 # Data preprocessing for the CSV file
 class DatasetPreprocessing(Dataset):

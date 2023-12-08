@@ -1,12 +1,13 @@
-from typing import List, Tuple, Optional, Dict, Union
-from omegaconf import DictConfig, OmegaConf
-from flwr.common import Parameters, Scalar
-from collections import OrderedDict
 import numpy as np
 import flwr as fl
 import torch
 import hydra
 import os
+
+from typing import List, Tuple, Optional, Dict, Union
+from omegaconf import DictConfig, OmegaConf
+from flwr.common import Parameters, Scalar
+from collections import OrderedDict
 
 from dataset import prepare_dataset
 from model import Net, test

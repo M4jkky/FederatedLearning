@@ -1,10 +1,9 @@
-import joblib
 import pandas as pd
+import joblib
 import torch
-from imblearn.over_sampling import KMeansSMOTE, SVMSMOTE
-from imblearn.under_sampling import EditedNearestNeighbours, NeighbourhoodCleaningRule, AllKNN, TomekLinks, OneSidedSelection, InstanceHardnessThreshold
+
+from imblearn.over_sampling import KMeansSMOTE
 from torch.utils.data import Dataset, DataLoader
-from imblearn.combine import SMOTETomek
 from sklearn.preprocessing import StandardScaler
 
 
@@ -29,21 +28,13 @@ class DatasetPreprocessing(Dataset):
         joblib.dump(self.scaler, '../Web/misc/scaler.pkl')
 
         if oversample:
-            kmeans = KMeansSMOTE(cluster_balance_threshold=0.1)
-            edited_nearest_neighbours = EditedNearestNeighbours()
-            neighbourhood_cleaning_rule = NeighbourhoodCleaningRule()
-            allknn = AllKNN()
-            tomeklinks = TomekLinks()
-            onesided_selection = OneSidedSelection()
-            svm = SVMSMOTE(sampling_strategy=0.7)
-            smote_tomek = SMOTETomek()
+            kmeans = KMeansSMOTE(cluster_balance_threshold=0.13, k_neighbors=7, random_state=42, sampling_strategy=0.7)
 
-            for i in range(3):
-                print("round ", i)
-                iht = InstanceHardnessThreshold(n_jobs=-1, sampling_strategy=0.5)
-                self.features, self.target = iht.fit_resample(self.features, self.target)
+            self.features, self.target = (kmeans.fit_resample(self.features, self.target))
 
-            #self.features, self.target = tomeklinks.fit_resample(self.features, self.target)
+            # Convert to pandas DataFrame to use 'value_counts()'
+            target_df = pd.DataFrame({'diabetes': self.target})
+            print(target_df['diabetes'].value_counts())
 
         if transform:
             self.transform = transform
@@ -67,17 +58,19 @@ class ToTensor:
                 'target': torch.tensor(target, dtype=torch.long)}
 
 
-def prepare_dataset(batch_size, oversample=True):
+def prepare_dataset(batch_size):
     try:
-        # Load dataset for client 1
+        # Load dataset
         train_dataset = DatasetPreprocessing(csv_file='../Datasets/centralized/train.csv', transform=ToTensor(),
-                                             oversample=oversample)
-        val_dataset = DatasetPreprocessing(csv_file='../Datasets/centralized/valid.csv', transform=ToTensor())
-        test_dataset = DatasetPreprocessing(csv_file='../Datasets/centralized/test.csv', transform=ToTensor())
+                                             oversample=True)
+        val_dataset = DatasetPreprocessing(csv_file='../Datasets/centralized/valid.csv', transform=ToTensor(),
+                                           oversample=False)
+        test_dataset = DatasetPreprocessing(csv_file='../Datasets/centralized/test.csv', transform=ToTensor(),
+                                            oversample=False)
 
         train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
         val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
-        test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+        test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=True)
 
         return train_loader, val_loader, test_loader
 

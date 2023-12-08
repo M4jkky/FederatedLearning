@@ -19,11 +19,13 @@ class Net(nn.Module):
 
 # Train the network on train set
 def train(net, train_loader, val_loader, optimizer, num_epochs, device, writer) -> None:
-    criterion = torch.nn.CrossEntropyLoss()
-    net.train()
-    net.to(device)
 
-    best_val_accuracy = 0.0  # Initialize best_val_accuracy variable
+    class_weights = torch.tensor([0.95, 1.1])
+    criterion = torch.nn.CrossEntropyLoss(weight=class_weights.to(device))
+    net.to(device)
+    net.train()
+
+    best_val_accuracy = 0.0
 
     for epoch in range(num_epochs):
         total_correct = 0

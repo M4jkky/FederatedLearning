@@ -23,7 +23,7 @@ class Net(nn.Module):
 
 
 model = Net(input_size=6, hidden_size=16, output_size=2)
-model.load_state_dict(torch.load('./misc/no_method.pth'))
+model.load_state_dict(torch.load('misc/cw_0.78.pth'))
 model.eval()
 
 # Load the StandardScaler used during training
@@ -99,7 +99,7 @@ def predict():
         data = pd.read_csv(file)
 
         data.reset_index(drop=True, inplace=True)
-        data['ID'] = data.index + 1
+        data['ID'] = data.index + 2
 
         # Extract relevant features
         features = data[['age', 'hypertension', 'heart_disease', 'bmi', 'HbA1c_level', 'blood_glucose_level']]

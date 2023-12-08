@@ -1,9 +1,9 @@
-from omegaconf import DictConfig, OmegaConf
-from flwr.common import Metrics
-from typing import List, Tuple
 import flwr as fl
 import hydra
 
+from omegaconf import DictConfig, OmegaConf
+from flwr.common import Metrics
+from typing import List, Tuple
 
 # Define metric aggregation function
 def weighted_average(metrics: List[Tuple[int, Metrics]]) -> Metrics:
