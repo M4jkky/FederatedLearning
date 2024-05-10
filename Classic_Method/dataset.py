@@ -2,18 +2,22 @@ import pandas as pd
 import joblib
 import torch
 
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 from imblearn.over_sampling import KMeansSMOTE
 from torch.utils.data import Dataset, DataLoader
 from sklearn.preprocessing import StandardScaler
 
 
 class DatasetPreprocessing(Dataset):
-    def __init__(self, csv_file, transform=None, oversample=True):
+    def __init__(self, csv_file, transform=None, oversample=None):
         self.data_frame = pd.read_csv(csv_file)
 
         self.transform = transform
 
-        # Drop 'smoking_history' and 'gender' columns
+        # Drop 'smoking_history' and 'gender' columns and duplicates
+        self.data_frame.drop_duplicates(inplace=True)
         self.data_frame = self.data_frame.drop(columns=['smoking_history', 'gender'])
 
         # Extract features and target columns after dropping 'smoking_history' and 'gender'
@@ -28,16 +32,13 @@ class DatasetPreprocessing(Dataset):
         joblib.dump(self.scaler, '../Web/misc/scaler.pkl')
 
         if oversample:
-            kmeans = KMeansSMOTE(cluster_balance_threshold=0.13, k_neighbors=7, random_state=42, sampling_strategy=0.7)
-
+            kmeans = KMeansSMOTE(cluster_balance_threshold=0.13, sampling_strategy=1.0, kmeans_estimator=45, k_neighbors=8)
             self.features, self.target = (kmeans.fit_resample(self.features, self.target))
-
-            # Convert to pandas DataFrame to use 'value_counts()'
-            target_df = pd.DataFrame({'diabetes': self.target})
-            print(target_df['diabetes'].value_counts())
-
         if transform:
             self.transform = transform
+
+        target_df = pd.DataFrame({'diabetes': self.target})
+        print(target_df['diabetes'].value_counts())
 
     def __len__(self):
         return len(self.features)
@@ -61,11 +62,11 @@ class ToTensor:
 def prepare_dataset(batch_size):
     try:
         # Load dataset
-        train_dataset = DatasetPreprocessing(csv_file='../Datasets/centralized/train.csv', transform=ToTensor(),
+        train_dataset = DatasetPreprocessing(csv_file='../Datasets/classic_method/train.csv', transform=ToTensor(),
                                              oversample=True)
-        val_dataset = DatasetPreprocessing(csv_file='../Datasets/centralized/valid.csv', transform=ToTensor(),
+        val_dataset = DatasetPreprocessing(csv_file='../Datasets/classic_method/valid.csv', transform=ToTensor(),
                                            oversample=False)
-        test_dataset = DatasetPreprocessing(csv_file='../Datasets/centralized/test.csv', transform=ToTensor(),
+        test_dataset = DatasetPreprocessing(csv_file='../Datasets/classic_method/test.csv', transform=ToTensor(),
                                             oversample=False)
 
         train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)

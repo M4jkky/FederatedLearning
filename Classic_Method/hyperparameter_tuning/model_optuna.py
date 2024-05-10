@@ -52,6 +52,8 @@ def train(net, train_loader, val_loader, optimizer, num_epochs, device):
         val_total_correct = 0
         val_total_samples = 0
         val_loss = 0.0
+        all_val_predictions = []
+        all_val_targets = []
 
         with torch.no_grad():
             for val_batch in val_loader:
@@ -64,8 +66,14 @@ def train(net, train_loader, val_loader, optimizer, num_epochs, device):
                 val_total_samples += val_target.size(0)
                 val_total_correct += (val_predicted == val_target).sum().item()
 
+                all_val_predictions.extend(val_predicted.cpu().numpy())
+                all_val_targets.extend(val_target.cpu().numpy())
+
         val_accuracy = 100 * val_total_correct / val_total_samples
         average_val_loss = val_loss / len(val_loader)
+
+        # Calculate F1 score
+        f1 = f1_score(all_val_targets, all_val_predictions)
 
         print(f'Epoch [{epoch + 1}/{num_epochs}], '
               f'Loss: {average_train_loss:.4f}, '
@@ -75,7 +83,7 @@ def train(net, train_loader, val_loader, optimizer, num_epochs, device):
 
     print('Training finished.')
 
-    return val_accuracy
+    return f1
 
 
 # Testing the network on test set

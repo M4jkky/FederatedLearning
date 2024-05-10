@@ -1,9 +1,8 @@
-from collections import OrderedDict
 import flwr as fl
 import torch
 import yaml
 
-
+from collections import OrderedDict
 from model import Net, train, test
 
 
@@ -44,7 +43,8 @@ class Client(fl.client.NumPyClient):
 
         self.set_parameters(parameters)
         optimizer = torch.optim.Adam(self.model.parameters(), lr=config['learning_rate'])
-        train(self.model, self.train_loader, optimizer, num_epochs=config['local_epochs'], device=self.device, writer=self.writer)
+        train(self.model, self.train_loader, optimizer, num_epochs=config['local_epochs'], device=self.device,
+              writer=self.writer)
 
         return self.get_parameters({}), len(self.train_loader), {}
 

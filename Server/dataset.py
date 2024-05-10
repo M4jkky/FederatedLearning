@@ -1,13 +1,31 @@
 import pandas as pd
 import torch
+from sklearn.preprocessing import StandardScaler
 
 from torch.utils.data import Dataset, DataLoader
+
 
 # Data preprocessing for the CSV file
 class DatasetPreprocessing(Dataset):
     def __init__(self, csv_file, transform=None):
         self.data_frame = pd.read_csv(csv_file)
+
         self.transform = transform
+
+        # Drop 'smoking_history' and 'gender' columns and duplicates
+        self.data_frame.drop_duplicates(inplace=True)
+        self.data_frame = self.data_frame.drop(columns=['smoking_history', 'gender'])
+
+        # Extract features and target columns after dropping 'smoking_history' and 'gender'
+        self.features = self.data_frame.drop(columns=['diabetes']).values.astype(float)
+        self.target = self.data_frame['diabetes'].values.astype(int)
+
+        # Apply StandardScaler to features
+        self.scaler = StandardScaler()
+        self.features = self.scaler.fit_transform(self.features)
+
+        target_df = pd.DataFrame({'diabetes': self.target})
+        print(target_df['diabetes'].value_counts())
 
     def __len__(self):
         return len(self.data_frame)
@@ -34,8 +52,8 @@ class ToTensor:
 # Loading dataset
 def load_dataset():
     try:
-        # Load dataset for client 2
-        test_dataset = DatasetPreprocessing(csv_file='dataset/diabetes_test.csv', transform=ToTensor())
+        # Load test dataset for server
+        test_dataset = DatasetPreprocessing(csv_file='dataset/test.csv', transform=ToTensor())
 
         return test_dataset
 

@@ -3,6 +3,7 @@ import torch.nn as nn
 import pandas as pd
 import joblib
 import torch
+
 from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_score
 from flask import Flask, request, render_template
 
@@ -22,8 +23,8 @@ class Net(nn.Module):
         return x
 
 
-model = Net(input_size=6, hidden_size=16, output_size=2)
-model.load_state_dict(torch.load('misc/cw_0.78.pth'))
+model = Net(input_size=6, hidden_size=27, output_size=2)
+model.load_state_dict(torch.load('/Users/m4/Desktop/school/3/BAKPR/FederatedLearning/Web/misc/model.pth'))
 model.eval()
 
 # Load the StandardScaler used during training

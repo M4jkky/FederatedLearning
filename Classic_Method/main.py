@@ -20,11 +20,11 @@ torch.cuda.manual_seed(seed)
 writer = SummaryWriter()
 
 # Hyperparameters
-batch_size = 19
-learning_rate = 0.013916677693345448
-epochs = 61
+batch_size = 104
+learning_rate = 0.02468996615073674
+epochs = 31
 input_size = 6
-hidden_size = 40
+hidden_size = 27
 output_size = 2
 
 # Check for CUDA availability and set device
@@ -40,7 +40,7 @@ def main():
     model = Net(input_size, hidden_size, output_size).to(device)
 
     # 3. Define optimizer
-    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate)
+    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
     # 4. Train the model on training data
     train(model, train_loader, val_loader, optimizer, epochs, device, writer)

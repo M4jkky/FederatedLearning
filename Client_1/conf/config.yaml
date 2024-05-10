@@ -1,10 +1,9 @@
 ---
 
-
-batch_size: 128 # batch size to use by the clients
+batch_size: 104 # batch size to use by the clients
 input_size: 6 # input size of the model
-hidden_size: 16 # hidden size of the model
+hidden_size: 27 # hidden size of the model
 output_size: 2 # output size of the model
-learning_rate: 0.001 # learning rate to use by the clients
+learning_rate: 0.02468996615073674 # learning rate to use by the clients
 local_epochs: 10 # number of training epochs each clients does in a fit() round
 server_address: "127.0.0.1:8080" # address of the server

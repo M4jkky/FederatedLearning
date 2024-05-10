@@ -1,9 +1,8 @@
 import pandas as pd
 import torch
-
 from imblearn.over_sampling import KMeansSMOTE
-from torch.utils.data import Dataset, DataLoader
 from sklearn.preprocessing import StandardScaler
+from torch.utils.data import Dataset, DataLoader
 
 
 class DatasetPreprocessing(Dataset):
@@ -12,7 +11,8 @@ class DatasetPreprocessing(Dataset):
 
         self.transform = transform
 
-        # Drop 'smoking_history' and 'gender' columns
+        # Drop 'smoking_history' and 'gender' columns and duplicates
+        self.data_frame.drop_duplicates(inplace=True)
         self.data_frame = self.data_frame.drop(columns=['smoking_history', 'gender'])
 
         # Extract features and target columns after dropping 'smoking_history' and 'gender'
@@ -24,11 +24,14 @@ class DatasetPreprocessing(Dataset):
         self.features = self.scaler.fit_transform(self.features)
 
         if oversample:
-            kmeans = KMeansSMOTE(cluster_balance_threshold=0.1)
-            self.features, self.target = kmeans.fit_resample(self.features, self.target)
-
+            kmeans = KMeansSMOTE(cluster_balance_threshold=0.13, sampling_strategy=1.0, kmeans_estimator=45,
+                                 k_neighbors=8)
+            self.features, self.target = (kmeans.fit_resample(self.features, self.target))
         if transform:
             self.transform = transform
+
+        target_df = pd.DataFrame({'diabetes': self.target})
+        print(target_df['diabetes'].value_counts())
 
     def __len__(self):
         return len(self.features)
@@ -52,9 +55,10 @@ class ToTensor:
 def prepare_dataset(batch_size, oversample=True):
     try:
         # Load dataset for client 1
-        train_dataset = DatasetPreprocessing(csv_file='../Datasets/diabetes/client1.csv', transform=ToTensor(),
+        train_dataset = DatasetPreprocessing(csv_file='../Datasets/clients/client1.csv', transform=ToTensor(),
                                              oversample=oversample)
-        val_dataset = DatasetPreprocessing(csv_file='../Datasets/diabetes/valid_c1.csv', transform=ToTensor())
+        val_dataset = DatasetPreprocessing(csv_file='../Datasets/clients/valid_c1.csv', transform=ToTensor(),
+                                           oversample=False)
 
         train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
         val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)

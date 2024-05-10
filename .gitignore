@@ -1,7 +1,7 @@
 
 .DS_Store
 Classic_Method/.DS_Store
-Classic_Method/db.sqlite3
+Classic_Method/hyperparameter_tuning/db.sqlite3
 Classic_Method/runs
 Client_1/.DS_Store
 Client_2/.DS_Store
@@ -12,4 +12,8 @@ Web/misc/.DS_Store
 Web/static/.DS_Store
 Web/templates/.DS_Store
 Web/visualization/.DS_Store
+Datasets/clients/file_1.csv
+Datasets/clients/file_2.csv
+Datasets/server/file_3.csv
+Datasets/server/file_4.csv
 ```

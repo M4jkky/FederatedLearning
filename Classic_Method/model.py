@@ -1,7 +1,12 @@
-from sklearn.metrics import precision_score, recall_score, f1_score, confusion_matrix, accuracy_score
+import numpy as np
 import torch.nn.functional as F
 import torch.nn as nn
 import torch
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+from sklearn.metrics import confusion_matrix, classification_report
 
 
 # Define model
@@ -19,9 +24,7 @@ class Net(nn.Module):
 
 # Train the network on train set
 def train(net, train_loader, val_loader, optimizer, num_epochs, device, writer) -> None:
-
-    class_weights = torch.tensor([0.95, 1.1])
-    criterion = torch.nn.CrossEntropyLoss(weight=class_weights.to(device))
+    criterion = torch.nn.CrossEntropyLoss()
     net.to(device)
     net.train()
 
@@ -110,12 +113,24 @@ def test(net, test_loader, device) -> None:
             all_predictions.extend(predicted.cpu().numpy())
             all_targets.extend(target.cpu().numpy())
 
-    accuracy = accuracy_score(all_targets, all_predictions)
-    precision = precision_score(all_targets, all_predictions)
-    recall = recall_score(all_targets, all_predictions)
-    f1 = f1_score(all_targets, all_predictions)
     cf = confusion_matrix(all_targets, all_predictions)
 
-    print(f'Test Accuracy: {accuracy:.2f}')
-    print(f'Precision: {precision:.2f}, Recall: {recall:.2f}, F1 Score: {f1:.2f}')
-    print(f'Confusion Matrix:\n{cf}')
+    # Convert cf and labels to string type
+    cf_str = cf.astype(str)
+    labels = np.array([['TN', 'FP'], ['FN', 'TP']])
+
+    # Concatenate labels and cf with a newline character in between
+    annot = np.core.defchararray.add(np.core.defchararray.add(labels, '\n'), cf_str)
+
+    plt.figure(figsize=(7, 7))
+    sns.heatmap(cf, annot=annot, fmt='', cmap='Blues', xticklabels=[], yticklabels=[], cbar=False, square=True)
+
+    plt.xlabel('Skutočné triedy')
+    plt.ylabel('Predikované triedy')
+    # plt.savefig('Classic_CM.png', dpi=400)
+    plt.tight_layout()
+    plt.show()
+
+    cr = classification_report(all_targets, all_predictions, target_names=['No Diabetes', 'Diabetes'])
+    print(f'Classification Report:\n{cr}')
+
