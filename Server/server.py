@@ -8,6 +8,18 @@ from typing import List, Tuple
 
 # Define metric aggregation function
 def weighted_average(metrics: List[Tuple[int, Metrics]]) -> Metrics:
+    """
+    Compute the weighted average of the metrics.
+
+    This function calculates the weighted average of the metrics based on the number of examples.
+    The accuracy is weighted by the number of examples.
+
+    Args:
+        metrics (List[Tuple[int, Metrics]]): A list of tuples where each tuple contains the number of examples and the metrics.
+
+    Returns:
+        Metrics: A dictionary containing the weighted average accuracy.
+    """
     # Compute weighted average of the metrics
     total_examples = sum(num_examples for num_examples, _ in metrics)
     weighted_accuracy = sum(num_examples * m["accuracy"] for num_examples, m in metrics)
@@ -15,8 +27,18 @@ def weighted_average(metrics: List[Tuple[int, Metrics]]) -> Metrics:
     return {"accuracy": weighted_accuracy / total_examples}
 
 
-# Function to start Flower server
 def start_flower_server(num_rounds):
+    """
+    Start the Flower server for federated learning.
+
+    This function defines the federated learning strategy as FedAvg and starts the Flower server with the specified number of rounds.
+
+    Args:
+        num_rounds (int): The number of rounds for federated learning.
+
+    Returns:
+        None
+    """
     # Define strategy
     strategy = fl.server.strategy.FedAvg(evaluate_metrics_aggregation_fn=weighted_average)
 

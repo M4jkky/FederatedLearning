@@ -11,18 +11,15 @@ class Client(fl.client.NumPyClient):
     def __init__(self, train_loader, val_loader, config, writer) -> None:
         super().__init__()
 
-        # the dataloaders that point to the data associated to this client
         self.train_loader = train_loader
         self.val_loader = val_loader
         self.best_model_params = None
         self.best_train_accuracy = 0.0
         self.writer = writer
 
-        # a model that is randomly initialised at first
         self.model = Net(input_size=config['input_size'], hidden_size=config['hidden_size'],
                          output_size=config['output_size'])
 
-        # figure out if this client has access to GPU support or not
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     def set_parameters(self, parameters):

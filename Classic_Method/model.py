@@ -1,22 +1,46 @@
-import numpy as np
 import torch.nn.functional as F
 import torch.nn as nn
 import torch
 
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.metrics import classification_report
 
 
 # Define model
 class Net(nn.Module):
+    """
+    A simple feed-forward neural network model.
+
+    This class extends PyTorch's nn.Module and defines a neural network with two linear layers.
+    The forward method defines the forward pass of the network.
+
+    Attributes:
+        fc1 (nn.Linear): The first linear layer of the network.
+        fc2 (nn.Linear): The second linear layer of the network.
+    """
+
     def __init__(self, input_size, hidden_size, output_size):
+        """
+        Initialize the Net.
+
+        Args:
+            input_size (int): The size of the input layer.
+            hidden_size (int): The size of the hidden layer.
+            output_size (int): The size of the output layer.
+        """
         super(Net, self).__init__()
         self.fc1 = nn.Linear(input_size, hidden_size)
         self.fc2 = nn.Linear(hidden_size, output_size)
 
     def forward(self, x):
+        """
+        Define the forward pass of the network.
+
+        Args:
+            x (torch.Tensor): The input to the network.
+
+        Returns:
+            torch.Tensor: The output of the network.
+        """
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
         return x
@@ -24,6 +48,24 @@ class Net(nn.Module):
 
 # Train the network on train set
 def train(net, train_loader, val_loader, optimizer, num_epochs, device, writer) -> None:
+    """
+    Train the neural network model.
+
+    This function trains the model for a specified number of epochs, and logs the training and validation loss and accuracy
+    to TensorBoard. It also saves the model with the best validation accuracy.
+
+    Args:
+        net (nn.Module): The neural network model to train.
+        train_loader (DataLoader): The DataLoader for the training data.
+        val_loader (DataLoader): The DataLoader for the validation data.
+        optimizer (Optimizer): The optimizer to use for training.
+        num_epochs (int): The number of epochs to train for.
+        device (torch.device): The device to train on.
+        writer (SummaryWriter): The TensorBoard writer.
+
+    Returns:
+        None
+    """
     criterion = torch.nn.CrossEntropyLoss()
     net.to(device)
     net.train()
@@ -98,6 +140,20 @@ def train(net, train_loader, val_loader, optimizer, num_epochs, device, writer) 
 
 # Testing the network on test set
 def test(net, test_loader, device) -> None:
+    """
+    Test the neural network model.
+
+    This function tests the model on the test set and prints a classification report.
+    The classification report includes precision, recall, f1-score, and support for each class.
+
+    Args:
+        net (nn.Module): The neural network model to test.
+        test_loader (DataLoader): The DataLoader for the test data.
+        device (torch.device): The device to test on.
+
+    Returns:
+        None
+    """
     net.eval()
     net.to(device)
 
@@ -113,24 +169,5 @@ def test(net, test_loader, device) -> None:
             all_predictions.extend(predicted.cpu().numpy())
             all_targets.extend(target.cpu().numpy())
 
-    cf = confusion_matrix(all_targets, all_predictions)
-
-    # Convert cf and labels to string type
-    cf_str = cf.astype(str)
-    labels = np.array([['TN', 'FP'], ['FN', 'TP']])
-
-    # Concatenate labels and cf with a newline character in between
-    annot = np.core.defchararray.add(np.core.defchararray.add(labels, '\n'), cf_str)
-
-    plt.figure(figsize=(7, 7))
-    sns.heatmap(cf, annot=annot, fmt='', cmap='Blues', xticklabels=[], yticklabels=[], cbar=False, square=True)
-
-    plt.xlabel('Skutočné triedy')
-    plt.ylabel('Predikované triedy')
-    # plt.savefig('Classic_CM.png', dpi=400)
-    plt.tight_layout()
-    plt.show()
-
     cr = classification_report(all_targets, all_predictions, target_names=['No Diabetes', 'Diabetes'])
     print(f'Classification Report:\n{cr}')
-

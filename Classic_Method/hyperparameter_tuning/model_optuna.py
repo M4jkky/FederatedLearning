@@ -1,4 +1,4 @@
-from sklearn.metrics import precision_score, recall_score, f1_score, confusion_matrix, accuracy_score
+from sklearn.metrics import f1_score
 import torch.nn.functional as F
 import torch.nn as nn
 import torch
@@ -19,8 +19,8 @@ class Net(nn.Module):
 
 # Train the network on train set
 def train(net, train_loader, val_loader, optimizer, num_epochs, device):
-    class_weights = torch.tensor([0.95, 1.1])
-    criterion = torch.nn.CrossEntropyLoss(weight=class_weights.to(device))
+    global f1
+    criterion = torch.nn.CrossEntropyLoss()
     net.to(device)
     net.train()
 
@@ -84,31 +84,3 @@ def train(net, train_loader, val_loader, optimizer, num_epochs, device):
     print('Training finished.')
 
     return f1
-
-
-# Testing the network on test set
-def test(net, test_loader, device) -> None:
-    net.eval()
-    net.to(device)
-
-    all_predictions = []
-    all_targets = []
-
-    with torch.no_grad():
-        for batch in test_loader:
-            features, target = batch['features'].to(device), batch['target'].to(device)
-            outputs = net(features)
-            _, predicted = torch.max(outputs, 1)
-
-            all_predictions.extend(predicted.cpu().numpy())
-            all_targets.extend(target.cpu().numpy())
-
-    accuracy = accuracy_score(all_targets, all_predictions)
-    precision = precision_score(all_targets, all_predictions)
-    recall = recall_score(all_targets, all_predictions)
-    f1 = f1_score(all_targets, all_predictions)
-    cf = confusion_matrix(all_targets, all_predictions)
-
-    print(f'Test Accuracy: {accuracy:.2f}')
-    print(f'Precision: {precision:.2f}, Recall: {recall:.2f}, F1 Score: {f1:.2f}')
-    print(f'Confusion Matrix:\n{cf}')

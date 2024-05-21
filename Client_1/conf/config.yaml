@@ -5,5 +5,5 @@ input_size: 6 # input size of the model
 hidden_size: 27 # hidden size of the model
 output_size: 2 # output size of the model
 learning_rate: 0.02468996615073674 # learning rate to use by the clients
-local_epochs: 10 # number of training epochs each clients does in a fit() round
-server_address: "127.0.0.1:8080" # address of the server
+local_epochs: 20 # number of training epochs each clients does in a fit() round
+server_address: "127.0.0.1:8080" # <--localhost (address of the server: 147.232.60.111:8080)

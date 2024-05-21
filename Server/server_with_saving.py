@@ -5,6 +5,7 @@ import numpy as np
 import flwr as fl
 import torch
 import hydra
+import os
 
 from typing import List, Tuple, Optional, Dict, Union
 from flwr.server.client_proxy import ClientProxy
@@ -18,9 +19,24 @@ np.random.seed(seed)
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 
+os.makedirs("./models", exist_ok=True)
+
 
 # Define metric aggregation function
 def weighted_average(metrics: List[Tuple[int, fl.common.Metrics]]) -> fl.common.Metrics:
+    """
+    Calculate the weighted average of the accuracy metric.
+
+    This function takes a list of tuples, where each tuple contains the number of examples and the metrics dictionary.
+    It calculates the total number of examples and the weighted sum of the accuracy metric.
+    The weighted average is then calculated by dividing the weighted sum by the total number of examples.
+
+    Args:
+        metrics (List[Tuple[int, fl.common.Metrics]]): A list of tuples, where each tuple contains the number of examples and the metrics dictionary.
+
+    Returns:
+        fl.common.Metrics: A dictionary containing the weighted average of the accuracy metric.
+    """
     total_examples = sum(num_examples for num_examples, _ in metrics)
     weighted_accuracy = sum(num_examples * m["accuracy"] for num_examples, m in metrics)
 
@@ -40,8 +56,22 @@ class Net(nn.Module):
 
 
 class SaveModelStrategy(fl.server.strategy.FedAvg):
+    """
+    A custom strategy for the Flower server that extends the FedAvg strategy.
+    This strategy not only aggregates the model weights from the clients, but also saves the aggregated model after each round.
+
+    Attributes:
+        net: A PyTorch model that will be updated with the aggregated parameters.
+    """
 
     def __init__(self, net, evaluate_metrics_aggregation_fn=None):
+        """
+        Initialize the SaveModelStrategy.
+
+        Args:
+            net: A PyTorch model.
+            evaluate_metrics_aggregation_fn: A function to aggregate the evaluation metrics. Defaults to None.
+        """
         super().__init__(evaluate_metrics_aggregation_fn=evaluate_metrics_aggregation_fn)
         self.net = net
 
@@ -51,8 +81,17 @@ class SaveModelStrategy(fl.server.strategy.FedAvg):
             results: List[Tuple[fl.server.client_proxy.ClientProxy, fl.common.FitRes]],
             failures: List[Union[Tuple[ClientProxy, FitRes], BaseException]],
     ) -> Tuple[Optional[Parameters], Dict[str, Scalar]]:
-        """Aggregate model weights using weighted average and store checkpoint"""
+        """
+        Aggregate model weights using weighted average and store checkpoint.
 
+        Args:
+            server_round: The current round number.
+            results: A list of tuples containing the client proxy and the fit result.
+            failures: A list of tuples containing the client proxy and the fit result for failed clients, or exceptions.
+
+        Returns:
+            A tuple containing the aggregated parameters and the aggregated metrics.
+        """
         # Call aggregate_fit from base class (FedAvg) to aggregate parameters and metrics
         aggregated_parameters, aggregated_metrics = super().aggregate_fit(server_round, results, failures)
 

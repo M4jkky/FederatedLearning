@@ -8,7 +8,7 @@ from dash import html
 from dash import dcc
 
 # Load data from CSV
-data = pd.read_csv('../../../Datasets/source/diabetes_prediction_dataset.csv')
+data = pd.read_csv('dataset.csv')
 
 # Preprocess data
 data = pd.get_dummies(data, columns=['gender', 'smoking_history'])

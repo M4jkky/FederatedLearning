@@ -6,7 +6,7 @@ import torch
 import time
 
 from dataset import prepare_dataset
-from model_optuna import Net, train, test
+from model_optuna import Net, train
 
 start_time = time.time()
 
@@ -23,7 +23,6 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Define the objective function for Optuna
 def objective(trial):
-    # Suggest values for the hyperparameters
     batch_size = trial.suggest_int('batch_size', 8, 128)
     learning_rate = trial.suggest_float('learning_rate', 1e-5, 1e-1, log=True)
     epochs = trial.suggest_int('epochs', 10, 40)
@@ -58,7 +57,7 @@ def objective(trial):
 
 
 def main():
-    # Create a study object and optimize the objective function
+    # Create an object and optimize the objective function
     study = optuna.create_study(storage="sqlite:///db.sqlite3", direction="maximize", study_name="more_optimizers")
     study.optimize(objective, n_trials=2)
 

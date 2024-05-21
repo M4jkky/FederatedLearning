@@ -24,7 +24,7 @@ class Net(nn.Module):
 
 
 model = Net(input_size=6, hidden_size=27, output_size=2)
-model.load_state_dict(torch.load('/Users/m4/Desktop/school/3/BAKPR/FederatedLearning/Web/misc/model.pth'))
+model.load_state_dict(torch.load('./misc/model.pth'))
 model.eval()
 
 # Load the StandardScaler used during training
@@ -144,4 +144,4 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=4000)

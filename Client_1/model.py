@@ -5,19 +5,61 @@ import torch.nn.functional as F
 
 # Define model / same as centralized
 class Net(nn.Module):
+    """
+    A class used to define the neural network model.
+
+    This class extends PyTorch's Module and defines a simple feed-forward neural network with two fully connected layers.
+
+    Attributes:
+        fc1 (nn.Linear): The first fully connected layer.
+        fc2 (nn.Linear): The second fully connected layer.
+    """
+
     def __init__(self, input_size, hidden_size, output_size):
+        """
+        Initialize the Net.
+
+        Args:
+            input_size (int): The size of the input layer.
+            hidden_size (int): The size of the hidden layer.
+            output_size (int): The size of the output layer.
+        """
         super(Net, self).__init__()
         self.fc1 = nn.Linear(input_size, hidden_size)
         self.fc2 = nn.Linear(hidden_size, output_size)
 
     def forward(self, x):
+        """
+        Define the forward pass of the network.
+
+        Args:
+            x (Tensor): The input tensor.
+
+        Returns:
+            Tensor: The output tensor.
+        """
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
         return x
 
 
-# Train the network on train set
 def train(net, train_loader, optimizer, num_epochs, device, writer):
+    """
+    Train the network on the training set.
+
+    This function trains the network for a specified number of epochs and logs the training loss and accuracy.
+
+    Args:
+        net (nn.Module): The neural network model to train.
+        train_loader (DataLoader): The DataLoader for the training data.
+        optimizer (optim.Optimizer): The optimizer.
+        num_epochs (int): The number of epochs to train for.
+        device (torch.device): The device to train on.
+        writer (SummaryWriter): The TensorBoard writer.
+
+    Returns:
+        None
+    """
     loss = 0.0
     criterion = torch.nn.CrossEntropyLoss()
     net.train()
@@ -48,8 +90,20 @@ def train(net, train_loader, optimizer, num_epochs, device, writer):
         writer.add_scalar('Accuracy/train', accuracy, epoch)
 
 
-# Testing the network on test set
 def test(net, val_loader, device):
+    """
+    Test the network on the validation set.
+
+    This function tests the network on the validation set and returns the loss and accuracy.
+
+    Args:
+        net (nn.Module): The neural network model to test.
+        val_loader (DataLoader): The DataLoader for the validation data.
+        device (torch.device): The device to test on.
+
+    Returns:
+        tuple: A tuple containing the loss and accuracy.
+    """
     criterion = torch.nn.CrossEntropyLoss()
     loss = 0.0
     correct_predictions = 0

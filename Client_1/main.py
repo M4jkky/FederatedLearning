@@ -5,8 +5,8 @@ import hydra
 
 from omegaconf import DictConfig, OmegaConf
 from tensorboardX import SummaryWriter
-from client import generate_client
 from dataset import prepare_dataset
+from client import generate_client
 
 seed = 42
 random_seed.seed(seed)
