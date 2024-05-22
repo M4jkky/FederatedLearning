@@ -5,9 +5,10 @@ import joblib
 import torch
 
 from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_score
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, flash, redirect, url_for
 
 app = Flask(__name__)
+app.secret_key = 'key'
 
 
 # Load the pre-trained PyTorch model
@@ -96,6 +97,11 @@ def predict():
 
     if request.method == 'POST':
         file = request.files['file']
+        # Check if the file is empty
+        if file is None or file.filename == '':
+            flash('No file was uploaded. Please upload a file.', 'error')
+            return redirect(url_for('index'))
+
         # Read the uploaded CSV file
         data = pd.read_csv(file)
 
@@ -130,6 +136,8 @@ def predict():
                 correct_predictions.append(data.iloc[i])
             else:
                 incorrect_predictions.append(data.iloc[i])
+
+        flash('Prediction has been made.', 'success')
 
     # Return the result messages and predictions to the template
     return render_template('result.html',

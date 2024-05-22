@@ -71,7 +71,6 @@ img {
     margin: auto auto 0;
 }
 
-/* New Style for the Slider Label Container */
 .label-container {
     display: flex;
     align-items: center;
@@ -81,7 +80,6 @@ img {
     font-size: 18px;
 }
 
-/* Style for the slider container */
 .slider-container {
     display: flex;
     align-items: center;
@@ -90,7 +88,6 @@ img {
     margin: 5px auto 2px;
 }
 
-/* Style for the slider */
 .slider {
     -webkit-appearance: none;
     height: 10px;
@@ -104,27 +101,23 @@ img {
     flex: 1;
 }
 
-/* Style for the slider labels */
 .slider-label-container {
     display: flex;
     align-items: center;
     flex: 1;
 }
 
-/* Style for the slider labels */
 .slider-label {
     flex: 0 0 30px;
     font-size: 18px;
     padding-left: 8px;
 }
 
-/* Adjust the margin for the slider container to create space */
 .slider-container .slider {
     flex: 1;
     margin: 0 10px;
 }
 
-/* Updated Slider Thumb for Modern Design */
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -147,7 +140,6 @@ img {
     cursor: pointer;
 }
 
-/* Updated Slider Hover Effect for Modern Design */
 .slider:hover {
     opacity: 1;
     background: linear-gradient(to right, #4CAF50, #1ED8B6);
@@ -165,10 +157,9 @@ button {
 }
 
 button:hover {
-    background-color: #a68278; /* Adjust the hover color as needed */
+    background-color: #a68278;
 }
 
-/* Style for the checkbox container */
 .checkbox-container {
     display: flex;
     align-items: center;
@@ -176,14 +167,12 @@ button:hover {
     margin-bottom: 20px;
 }
 
-/* Style for the checkbox labels */
 .checkbox-label {
     font-size: 20px;
     text-align: center;
     margin-left: 10px;
 }
 
-/* Style for the checkbox */
 .checkbox {
     -webkit-appearance: none;
     width: 20px;
@@ -196,7 +185,6 @@ button:hover {
     margin-left: 10px;
 }
 
-/* Style for the checkbox mark */
 .checkbox::before {
     content: '\2713'; /* Unicode checkmark character */
     font-size: 16px;
@@ -210,15 +198,13 @@ button:hover {
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0;
-    transition: opacity 0.3s ease; /* Added transition effect */
+    transition: opacity 0.3s ease;
 }
 
-/* Updated Checkbox Checked Style */
 .checkbox:checked {
     background: #15a88b;
 }
 
-/* Updated Checkbox Checked Mark Style */
 .checkbox:checked::before {
     opacity: 1;
 }
@@ -238,7 +224,6 @@ button:hover {
     padding-bottom: 12px;
 }
 
-/* Add the modal styles here */
 .modal {
     display: none;
     position: fixed;
@@ -260,7 +245,7 @@ button:hover {
     max-width: 500px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative; /* Added position relative */
+    position: relative;
 }
 
 .close {
@@ -278,33 +263,29 @@ button:hover {
     color: #333;
 }
 
-/* Additional styling for the modal content */
 #modalText {
     font-size: 16px;
     line-height: 1.5;
     color: #333;
 }
 
-/* Styling for the image */
 .info-icon img {
-    width: 20px; /* Adjust the width as needed */
-    height: 20px; /* Adjust the height as needed */
+    width: 20px;
+    height: 20px;
     cursor: pointer;
-    vertical-align: middle; /* Align the image vertically in the middle */
+    vertical-align: middle;
     margin-bottom: 7px;
 }
 
-/* Updated Style for Label Container */
 .label-container {
     display: flex;
     align-items: center;
 }
 
-/* Adjustments for the Text Labels */
 .slider-row label span,
 .checkbox-container label span {
-    flex: 1; /* Expand to fill available space */
-    text-align: center; /* Center text */
+    flex: 1;
+    text-align: center;
 }
 
 a {
